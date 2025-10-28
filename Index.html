@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Interactivo de Laboratorio: Calor II (Mecánica)</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga de íconos (para el asistente de IA) -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f6;
+        }
+        .lab-section { display: none; }
+        .lab-section.active { display: block; }
+        .ai-button { transition: all 0.3s ease; }
+        .ai-button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        /* Estilo para el contenedor del video */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* Proporción 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 0.5rem; /* Esquinas redondeadas */
+            margin-bottom: 1.5rem; /* Espacio debajo del video */
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen">
+
+    <!-- Barra Lateral de Navegación -->
+    <nav class="w-full md:w-1/4 bg-white shadow-lg p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-6">Secciones del Informe</h2>
+        <ul class="space-y-3">
+            <li><a href="#" class="nav-link font-medium text-gray-600 hover:text-blue-600" onclick="showSection('introduccion')">1. Introducción</a></li>
+            <li><a href="#" class="nav-link font-medium text-gray-600 hover:text-blue-600" onclick="showSection('objetivos')">2. Objetivos</a></li>
+            <li><a href="#" class="nav-link font-medium text-gray-600 hover:text-blue-600" onclick="showSection('datos-iniciales')">3. Datos Iniciales</a></li>
+            <li><a href="#" class="nav-link font-medium text-gray-600 hover:text-blue-600" onclick="showSection('analisis-grafico')">4. Análisis Gráfico</a></li>
+            <li><a href="#" class="nav-link font-medium text-gray-600 hover:text-blue-600" onclick="showSection('balance-energia-materia')">5. Balance de Energía y Materia</a></li>
+            <li><a href="#" class="nav-link font-medium text-gray-600 hover:text-blue-600" onclick="showSection('transferencia-calor')">6. Transferencia de Calor (Condensador)</a></li>
+            <li><a href="#" class="nav-link font-medium text-gray-600 hover:text-blue-600" onclick="showSection('analisis-critico')">7. Análisis Crítico</a></li>
+            <li><a href="#" class="nav-link font-medium text-gray-600 hover:text-blue-600" onclick="showSection('conclusiones')">8. Conclusiones</a></li>
+        </ul>
+        <div class="mt-8 p-3 bg-gray-100 rounded-lg text-sm text-gray-700">
+            <p><strong class="text-gray-900">Estudiante:</strong> [Tu Nombre]</p>
+            <p><strong class="text-gray-900">Curso:</strong> Transferencia de Calor II</p>
+            <p><strong class="text-gray-900">Profesor:</strong> Ph.D. Juan Sandoval Herrera</p>
+        </div>
+    </nav>
+
+    <!-- Área de Contenido Principal -->
+    <main class="w-full md:w-3/4 p-8 md:p-12 overflow-y-auto">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">Informe Interactivo de Laboratorio</h1>
+            <p class="text-lg text-gray-600">Evaporación, Condensación y Transferencia de Calor (Enfoque Mecánico)</p>
+        </header>
+
+        <!-- Sección 1: Introducción -->
+        <section id="introduccion" class="lab-section active">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-4">1. Introducción</h2>
+
+            <!-- Video Insertado -->
+            <div class="video-container shadow-lg">
+                 <video controls>
+                    <source src="Video_Evaporación_y_Condensación_en_Laboratorio.mp4" type="video/mp4">
+                    Tu navegador no soporta el elemento de video.
+                </video>
+            </div>
+
+            <p class="text-gray-700 mb-4">
+                Observa el video anterior que resume el montaje y procedimiento. Luego, redacta la introducción de tu informe. Explica la importancia industrial de los procesos de evaporación y condensación en sistemas térmicos y de potencia. Describe brevemente el objetivo del experimento: analizar el calentamiento de una solución acuosa en Bogotá para estudiar la transferencia de calor y el comportamiento termodinámico durante el cambio de fase.
+            </p>
+            <textarea class="w-full h-64 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Escribe tu introducción aquí..."></textarea>
+            <button class="ai-button mt-4" onclick="getAIAssistance('introduccion')">
+                <span class="flex items-center bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700">
+                    <svg data-lucide="brain-circuit" class="mr-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V3m0 18v-2M5 12H3m18 0h-2M12 12a4 4 0 1 0-4-4m0 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"/><path d="M16 12a4 4 0 1 0-4-4m8 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M8 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 16a4 4 0 1 0-4-4"/></svg>
+                    Asistente de IA
+                </span>
+            </button>
+            <div id="feedback-introduccion" class="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700" style="display: none;"></div>
+        </section>
+
+        <!-- Sección 2: Objetivos -->
+        <section id="objetivos" class="lab-section">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-4">2. Objetivos</h2>
+            <p class="text-gray-700 mb-4">
+                Revisa los objetivos actualizados. Cópialos aquí y añade comentarios si lo deseas.
+            </p>
+            <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg mb-4">
+                <h4 class="font-bold text-blue-800">Objetivo General:</h4>
+                <p class="text-blue-700">Analizar integralmente los fenómenos de transferencia de calor y de materia durante la evaporación de una solución acuosa y la posterior condensación del vapor, correlacionando los datos experimentales con los principios termodinámicos en condiciones de altitud.</p>
+                <h4 class="font-bold text-blue-800 mt-2">Objetivos Específicos:</h4>
+                <ul class="list-disc list-inside text-blue-700">
+                    <li>Determinar experimentalmente la temperatura de ebullición de la solución en Bogotá y compararla con la temperatura teórica del agua pura a la presión atmosférica registrada.</li>
+                    <li>Calcular la energía teórica requerida (calor sensible y latente) para evaporar el volumen de agua recolectado.</li>
+                    <li>Calcular el coeficiente global de transferencia de calor (U) de un condensador de vidrio de laboratorio a partir de un balance de energía en el fluido refrigerante.</li>
+                    <li>Realizar un balance de materia completo del proceso para cuantificar las pérdidas de masa.</li>
+                </ul>
+            </div>
+            <textarea class="w-full h-32 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Escribe tus hipótesis o comentarios personales sobre los objetivos aquí..."></textarea>
+             <button class="ai-button mt-4" onclick="getAIAssistance('objetivos')">
+                <span class="flex items-center bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700">
+                    <svg data-lucide="brain-circuit" class="mr-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V3m0 18v-2M5 12H3m18 0h-2M12 12a4 4 0 1 0-4-4m0 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"/><path d="M16 12a4 4 0 1 0-4-4m8 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M8 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 16a4 4 0 1 0-4-4"/></svg>
+                    Asistente de IA
+                </span>
+            </button>
+             <div id="feedback-objetivos" class="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700" style="display: none;"></div>
+        </section>
+
+        <!-- Sección 3: Datos Iniciales -->
+        <section id="datos-iniciales" class="lab-section">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-4">3. Datos Iniciales</h2>
+            <p class="text-gray-700 mb-4">
+                Registra todos los datos medidos y las propiedades físicas relevantes.
+            </p>
+            <textarea class="w-full h-80 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Registra aquí tus datos iniciales:&#10;- Masa de NaCl (g)&#10;- Volumen de Agua (mL)&#10;- Presión Atmosférica (mbar)&#10;- T° Ambiente (°C)&#10;- T° Agua Refrigeración (Entrada y Salida)&#10;- Caudal Agua Refrigeración (L/min)&#10;- Dimensiones del Condensador (L y D)&#10;- Tiempo total del experimento (min)&#10;- Volumen final en matraz (mL)&#10;- Volumen de condensado (mL)&#10;- Propiedades del agua (cp, densidad, h_fg a T_eb)&#10;- ...etc."></textarea>
+            <button class="ai-button mt-4" onclick="getAIAssistance('datos-iniciales')">
+                <span class="flex items-center bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700">
+                    <svg data-lucide="brain-circuit" class="mr-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V3m0 18v-2M5 12H3m18 0h-2M12 12a4 4 0 1 0-4-4m0 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"/><path d="M16 12a4 4 0 1 0-4-4m8 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M8 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 16a4 4 0 1 0-4-4"/></svg>
+                    Asistente de IA
+                </span>
+            </button>
+            <div id="feedback-datos-iniciales" class="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700" style="display: none;"></div>
+        </section>
+
+        <!-- Sección 4: Análisis Gráfico -->
+        <section id="analisis-grafico" class="lab-section">
+             <h2 class="text-3xl font-semibold text-gray-800 mb-4">4. Análisis Gráfico (T vs. Tiempo)</h2>
+            <p class="text-gray-700 mb-4">
+                Inserta tu gráfica de T1 (líquido) y T2 (vapor) contra el tiempo. Debajo, describe y analiza el comportamiento observado.
+            </p>
+            <div class="w-full h-64 p-4 border border-dashed border-gray-400 rounded-lg bg-gray-50 text-center flex items-center justify-center text-gray-500 mb-4">
+                (Inserta tu gráfica de Excel/Software aquí o súbela por separado y descríbela abajo)
+            </div>
+            <textarea class="w-full h-48 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Describe tu gráfica aquí...&#10;- ¿Qué ocurre en la primera etapa (calor sensible)?&#10;- ¿En qué momento T1 y T2 se igualan? ¿Qué significa esto?&#10;- ¿Qué temperatura de ebullición registraste?"></textarea>
+            <button class="ai-button mt-4" onclick="getAIAssistance('analisis-grafico')">
+                <span class="flex items-center bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700">
+                    <svg data-lucide="brain-circuit" class="mr-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V3m0 18v-2M5 12H3m18 0h-2M12 12a4 4 0 1 0-4-4m0 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"/><path d="M16 12a4 4 0 1 0-4-4m8 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M8 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 16a4 4 0 1 0-4-4"/></svg>
+                    Asistente de IA
+                </span>
+            </button>
+            <div id="feedback-analisis-grafico" class="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700" style="display: none;"></div>
+        </section>
+
+        <!-- Sección 5: Balance de Energía y Materia -->
+        <section id="balance-energia-materia" class="lab-section">
+             <h2 class="text-3xl font-semibold text-gray-800 mb-4">5. Balance de Energía (Evaporación) y Materia</h2>
+            <p class="text-gray-700 mb-4">
+                Realiza los cálculos correspondientes a la energía de evaporación y al balance de materia.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <textarea class="w-full h-80 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Cálculo de Energía de Evaporación:&#10;- Volumen/Masa de condensado (kg)&#10;- Calor Sensible (Q1) = m * cp * (T_eb - T_amb)&#10;- Calor Latente (Q2) = m * h_fg (a T_eb)&#10;- Energía Total (Q_total) = Q1 + Q2&#10;... (Muestra tus cálculos)"></textarea>
+                <textarea class="w-full h-80 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Balance de Materia:&#10;- Masa inicial total (kg)&#10;- Masa final total (kg) (matraz + condensado)&#10;- Masa perdida (kg)&#10;- Porcentaje de pérdidas de masa&#10;... (Muestra tus cálculos)"></textarea>
+            </div>
+            <button class="ai-button mt-4" onclick="getAIAssistance('balance-energia-materia')">
+                <span class="flex items-center bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700">
+                    <svg data-lucide="brain-circuit" class="mr-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V3m0 18v-2M5 12H3m18 0h-2M12 12a4 4 0 1 0-4-4m0 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"/><path d="M16 12a4 4 0 1 0-4-4m8 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M8 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 16a4 4 0 1 0-4-4"/></svg>
+                    Asistente de IA
+                </span>
+            </button>
+            <div id="feedback-balance-energia-materia" class="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700" style="display: none;"></div>
+        </section>
+
+        <!-- Sección 6: Transferencia de Calor (Condensador) -->
+        <section id="transferencia-calor" class="lab-section">
+             <h2 class="text-3xl font-semibold text-gray-800 mb-4">6. Transferencia de Calor (Condensador)</h2>
+            <p class="text-gray-700 mb-4">
+                Calcula el Coeficiente Global de Transferencia de Calor (U) del condensador de vidrio.
+            </p>
+            <textarea class="w-full h-96 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Muestra tu secuencia de cálculo:&#10;1. Calor retirado por el refrigerante (Q):&#10;   Q = ṁ * cp * (T_sal - T_ent)&#10;   (Recuerda convertir L/min a kg/s)&#10;&#10;2. Área de Transferencia (A):&#10;   A = π * D_ext * L&#10;&#10;3. Diferencia de Temp. Media Logarítmica (LMTD):&#10;   ΔT1 = T_vapor - T_agua_sal&#10;   ΔT2 = T_vapor - T_agua_ent&#10;   LMTD = (ΔT1 - ΔT2) / ln(ΔT1 / ΔT2)&#10;&#10;4. Coeficiente Global (U):&#10;   U = Q / (A * LMTD)&#10;&#10;Presenta tu valor final de U en W/m²K."></textarea>
+            <button class="ai-button mt-4" onclick="getAIAssistance('transferencia-calor')">
+                <span class="flex items-center bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700">
+                    <svg data-lucide="brain-circuit" class="mr-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V3m0 18v-2M5 12H3m18 0h-2M12 12a4 4 0 1 0-4-4m0 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"/><path d="M16 12a4 4 0 1 0-4-4m8 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M8 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 16a4 4 0 1 0-4-4"/></svg>
+                    Asistente de IA
+                </span>
+            </button>
+            <div id="feedback-transferencia-calor" class="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700" style="display: none;"></div>
+        </section>
+
+        <!-- Sección 7: Análisis Crítico -->
+        <section id="analisis-critico" class="lab-section">
+             <h2 class="text-3xl font-semibold text-gray-800 mb-4">7. Análisis Crítico</h2>
+            <p class="text-gray-700 mb-4">
+                Analiza críticamente tus resultados experimentales en comparación con los valores teóricos esperados.
+            </p>
+            <textarea class="w-full h-96 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Sigue esta línea de análisis:&#10;1. Temperatura de Ebullición:&#10;   - Compara tu T_ebullición medida (${labData.temp_eb_experimental}°C) con la T_ebullición teórica del agua pura a ${labData.presion_mbar} mbar (≈ ${labData.temp_eb_pura_teorica}°C).&#10;   - ¿Son iguales? ¿Son diferentes? ¿Cuánto difieren?&#10;   - Discute las posibles causas de esta diferencia (presencia de soluto -mencionar brevemente sin entrar en detalles de coligativas-, error sistemático de los termómetros, error en la medición de presión). ¿Cuál consideras más probable y por qué?&#10;&#10;2. Coeficiente Global de Transferencia de Calor (U):&#10;   - Compara tu valor experimental U = ${labData.U_calculado.toFixed(1)} W/m²K con los rangos típicos para condensadores de vidrio (200-600 W/m²K).&#10;   - ¿Es tu valor coherente? ¿Está en el extremo alto o bajo del rango?&#10;   - ¿Qué factores de tu experimento (ej. alto caudal de refrigerante) podrían explicar tu resultado específico?&#10;&#10;3. Sugerencias de Mejora:&#10;   - Si quisieras mejorar la eficiencia del proceso (evaporar más rápido o condensar más eficientemente), ¿qué cambios harías al montaje o a las condiciones de operación? (Considera aislamiento, potencia de calentamiento, flujo de refrigerante, etc.)."></textarea>
+            <button class="ai-button mt-4" onclick="getAIAssistance('analisis-critico')">
+                <span class="flex items-center bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700">
+                    <svg data-lucide="brain-circuit" class="mr-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V3m0 18v-2M5 12H3m18 0h-2M12 12a4 4 0 1 0-4-4m0 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"/><path d="M16 12a4 4 0 1 0-4-4m8 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M8 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 16a4 4 0 1 0-4-4"/></svg>
+                    Asistente de IA
+                </span>
+            </button>
+            <div id="feedback-analisis-critico" class="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700" style="display: none;"></div>
+        </section>
+
+        <!-- Sección 8: Conclusiones -->
+        <section id="conclusiones" class="lab-section">
+             <h2 class="text-3xl font-semibold text-gray-800 mb-4">8. Conclusiones</h2>
+            <p class="text-gray-700 mb-4">
+                Redacta tus conclusiones finales basándote en los objetivos y tus hallazgos.
+            </p>
+            <textarea class="w-full h-80 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Asegúrate de concluir sobre:&#10;1. La temperatura de ebullición medida y su comparación con la teórica del agua pura en Bogotá. Incluye tu hipótesis sobre la diferencia.&#10;2. La energía teórica requerida para la evaporación (en kJ).&#10;3. El valor del coeficiente global de transferencia de calor (U) obtenido (en W/m²K) y su coherencia con la literatura.&#10;4. El balance de materia y las pérdidas del proceso.&#10;5. La importancia de considerar las condiciones locales (presión/altitud) y la precisión instrumental en análisis térmicos."></textarea>
+            <button class="ai-button mt-4" onclick="getAIAssistance('conclusiones')">
+                <span class="flex items-center bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700">
+                    <svg data-lucide="brain-circuit" class="mr-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V3m0 18v-2M5 12H3m18 0h-2M12 12a4 4 0 1 0-4-4m0 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"/><path d="M16 12a4 4 0 1 0-4-4m8 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M8 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 16a4 4 0 1 0-4-4"/></svg>
+                    Asistente de IA
+                </span>
+            </button>
+            <div id="feedback-conclusiones" class="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700" style="display: none;"></div>
+        </section>
+
+    </main>
+
+    <script>
+        // Datos clave del laboratorio (ACTUALIZADOS para enfoque mecánico)
+        const labData = {
+            presion_mbar: 560,
+            presion_kPa: 56,
+            temp_eb_pura_teorica: 84.0, // °C
+            temp_eb_experimental: 88.0, // °C (Medida en la solución)
+            masa_nacl_g: 9.0, // Dato de preparación, ahora menos relevante para cálculos centrales
+            vol_agua_mL: 350.0,
+            masa_agua_kg: 0.350,
+            // Se eliminan molalidad, i, Kb, deltaT_b_teorico, deltaT_b_experimental
+            caudal_L_min: 4.7,
+            deltaT_agua_refrig: 1.0, // °C
+            diametro_cond_m: 0.012,
+            long_cond_m: 0.24,
+            area_cond: Math.PI * 0.012 * 0.24, // ~0.00905 m²
+            calor_Q_W: (4.7 / 60) * 1.0 * 4186 * 1.0, // ~327 W
+            lmtd: ((88 - 21) - (88 - 20)) / Math.log((88 - 21) / (88 - 20)), // ~67.5 °C (Usa T_eb_experimental)
+            U_calculado: ( (4.7 / 60) * 1.0 * 4186 * 1.0 ) / ( (Math.PI * 0.012 * 0.24) * (((88 - 21) - (88 - 20)) / Math.log((88 - 21) / (88 - 20))) ), // ~535.4 W/m²K
+            vol_condensado_mL: 20,
+            vol_perdido_mL: 2,
+            masa_agua_final_kg: 0.350 - 0.022,
+            // Se elimina molalidad final
+        };
+
+        // Función para mostrar la sección activa
+        function showSection(sectionId) {
+            document.querySelectorAll('.lab-section').forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('text-blue-600', 'font-bold');
+                link.classList.add('text-gray-600');
+                if (link.getAttribute('onclick').includes(sectionId)) {
+                    link.classList.add('text-blue-600', 'font-bold');
+                    link.classList.remove('text-gray-600');
+                }
+            });
+        }
+
+        // Simulación de Asistente de IA (ACTUALIZADO)
+        function getAIAssistance(sectionId) {
+            let feedback = '';
+            const feedbackEl = document.getElementById(`feedback-${sectionId}`);
+
+            switch (sectionId) {
+                case 'introduccion':
+                    feedback = `
+                        <strong>Sugerencia del Asistente:</strong> ¡Bien! Enfócate en la relevancia de la evaporación/condensación en ciclos de potencia, refrigeración, HVAC, etc. Destaca cómo la presión ambiental afecta la temperatura de cambio de fase y la eficiencia de estos procesos.
+                    `;
+                    break;
+
+                 case 'objetivos':
+                     feedback = `
+                        <strong>Sugerencia del Asistente:</strong> Los objetivos ahora se centran en el análisis térmico y de fluidos. Asegúrate de que tus hipótesis (si las tienes) se relacionen con la transferencia de calor, la temperatura de ebullición o la eficiencia del condensador.
+                    `;
+                    break;
+
+                case 'datos-iniciales':
+                    feedback = `
+                        <strong>Asistente de IA (Verificación):</strong> Revisa tus datos:
+                        <ul>
+                            <li><strong>Presión y T° Ebullición Teórica:</strong> Registraste ${labData.presion_mbar} mbar. A esta presión, el agua pura hierve a ≈ <strong>${labData.temp_eb_pura_teorica}°C</strong>. ¡Este es tu valor de referencia!</li>
+                            <li><strong>Propiedades del Agua:</strong> Asegúrate de usar valores correctos de cp (≈ 4186 J/kgK) y h_fg (a 88°C ≈ 2288 kJ/kg) para tus cálculos energéticos.</li>
+                            <li><strong>Caudal Refrigerante:</strong> Tu caudal de ${labData.caudal_L_min} L/min es clave para el cálculo de U. Conviértelo a kg/s para el balance de energía (≈ 0.0783 kg/s asumiendo densidad 1 kg/L).</li>
+                        </ul>
+                    `;
+                    break;
+
+                case 'analisis-grafico':
+                     feedback = `
+                        <strong>Sugerencia del Asistente:</strong> ¡Buen análisis! Observa en tus datos cómo T1 (líquido) aumenta constantemente (calor sensible) mientras T2 (vapor) permanece baja.
+                        <ul>
+                            <li><strong>Punto Clave:</strong> Alrededor del minuto 48-49, T2 se dispara y se iguala con T1 en ${labData.temp_eb_experimental}°C. Este es el momento exacto en que el sistema alcanza el equilibrio termodinámico y comienza la ebullición franca. El vapor que sale tiene la misma temperatura que el líquido.</li>
+                             <li><strong>Importante:</strong> La temperatura a la que esto ocurre (${labData.temp_eb_experimental}°C) es tu temperatura de ebullición experimental. ¿Cómo se compara con la teórica del agua pura a la presión de tu laboratorio?</li>
+                            <li>Asegúrate de discutir por qué ambas temperaturas se mantienen constantes (calor latente) aunque la plancha sigue suministrando energía.</li>
+                        </ul>
+                    `;
+                    break;
+
+                case 'balance-energia-materia':
+                    feedback = `
+                        <strong>Asistente de IA (Verificación):</strong> Revisemos los cálculos clave:
+                        <ul>
+                            <li><strong>Energía de Evaporación (para ${labData.vol_condensado_mL} mL):</strong>
+                                <ul>
+                                     <li>Masa a evaporar = ${labData.vol_condensado_mL / 1000} kg.</li>
+                                     <li>Q_sensible (de 18°C a 88°C) = (${labData.vol_condensado_mL / 1000}) * 4186 * (88 - 18) = <strong>${( (labData.vol_condensado_mL / 1000) * 4186 * 70 ).toFixed(2)} J (${( (labData.vol_condensado_mL / 1000) * 4186 * 70 / 1000).toFixed(2)} kJ)</strong>.</li>
+                                     <li>Q_latente (a 88°C, h_fg ≈ 2288 kJ/kg) = (${labData.vol_condensado_mL / 1000}) * 2288000 = <strong>${( (labData.vol_condensado_mL / 1000) * 2288000 ).toFixed(2)} J (${( (labData.vol_condensado_mL / 1000) * 2288000 / 1000).toFixed(2)} kJ)</strong>.</li>
+                                     <li><strong>Q_Total ≈ ${((( (labData.vol_condensado_mL / 1000) * 4186 * 70 ) + ( (labData.vol_condensado_mL / 1000) * 2288000 )) / 1000).toFixed(2)} kJ</strong>. Esta es la energía mínima absorbida por el agua evaporada.</li>
+                                </ul>
+                            </li>
+                             <li><strong>Balance de Materia:</strong>
+                                <ul>
+                                    <li>Masa inicial ≈ ${labData.masa_agua_kg} kg (agua) + ${labData.masa_nacl_g / 1000} kg (sal) = ${ (labData.masa_agua_kg + labData.masa_nacl_g / 1000).toFixed(3)} kg.</li>
+                                     <li>Masa final (medida) = (${labData.masa_agua_final_kg.toFixed(3)} kg + ${labData.masa_nacl_g / 1000} kg) [matraz] + ${labData.vol_condensado_mL / 1000} kg [condensado] = ${ (labData.masa_agua_final_kg + labData.masa_nacl_g / 1000 + labData.vol_condensado_mL / 1000).toFixed(3)} kg.</li>
+                                    <li>Masa perdida = Masa inicial - Masa final medida = <strong>${( (labData.masa_agua_kg + labData.masa_nacl_g / 1000) - (labData.masa_agua_final_kg + labData.masa_nacl_g / 1000 + labData.vol_condensado_mL / 1000) ).toFixed(3)} kg</strong> (Esto debería coincidir con tus ~2mL perdidos).</li>
+                                    <li>% Pérdida = (Masa perdida / Masa inicial) * 100.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    `;
+                    break;
+
+                case 'transferencia-calor':
+                     feedback = `
+                        <strong>Asistente de IA (Verificación de Cálculo de U):</strong> ¡Este es un cálculo de ingeniería clave! Usemos los datos:
+                        <ul>
+                            <li><strong>1. Calor (Q):</strong> ṁ = ${labData.caudal_L_min} L/min * (1 min / 60 s) * (1 kg/L) ≈ 0.0783 kg/s.
+                                <br>Q = (0.0783 kg/s) * (4186 J/kg°C) * (${labData.deltaT_agua_refrig}°C) = <strong>${labData.calor_Q_W.toFixed(1)} W</strong>.</li>
+                            <li><strong>2. Área (A):</strong> A = π * D * L = π * ${labData.diametro_cond_m} m * ${labData.long_cond_m} m = <strong>${labData.area_cond.toFixed(5)} m²</strong>.</li>
+                            <li><strong>3. LMTD:</strong> Se usa la T_ebullición experimental (${labData.temp_eb_experimental}°C) como la T del vapor constante.
+                               <br> ΔT1 = ${labData.temp_eb_experimental} - 21 = 67°C. ΔT2 = ${labData.temp_eb_experimental} - 20 = 68°C.
+                                <br>LMTD = (68 - 67) / ln(68/67) = <strong>${labData.lmtd.toFixed(2)} °C</strong>.</li>
+                            <li><strong>4. Coeficiente Global (U):</strong> U = Q / (A * LMTD)
+                                <br>U = ${labData.calor_Q_W.toFixed(1)} W / (${labData.area_cond.toFixed(5)} m² * ${labData.lmtd.toFixed(2)} °C) = <strong>${labData.U_calculado.toFixed(1)} W/m²K</strong>.</li>
+                        </ul>
+                        <p class="mt-2">Tu valor es <strong>${labData.U_calculado.toFixed(1)} W/m²K</strong>. En tu análisis, compáralo con el rango típico para condensadores de vidrio (200-600 W/m²K). ¿Es coherente? ¿Por qué?</p>
+                    `;
+                    break;
+
+                case 'analisis-critico':
+                    feedback = `
+                        <strong class="text-blue-700">Asistente de IA (Análisis Crítico):</strong> Ahora el foco está en comparar tu experimento con la referencia del agua pura y analizar el rendimiento del condensador.
+                        <ol class="list-decimal list-inside space-y-2 mt-2">
+                            <li><strong>Temperatura de Ebullición:</strong>
+                                <ul>
+                                    <li>T° Ebullición Teórica (Agua Pura a ${labData.presion_mbar} mbar) ≈ <strong>${labData.temp_eb_pura_teorica}°C</strong>.</li>
+                                    <li>T° Ebullición Experimental (Solución) = <strong>${labData.temp_eb_experimental}°C</strong>.</li>
+                                    <li>Diferencia = <strong>${ (labData.temp_eb_experimental - labData.temp_eb_pura_teorica).toFixed(1) }°C</strong>.</li>
+                                </ul>
+                                <p>¿A qué atribuyes esta diferencia de ${ (labData.temp_eb_experimental - labData.temp_eb_pura_teorica).toFixed(1) }°C? Considera:</p>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li>El efecto (aunque ahora no lo cuantifiques en detalle) de tener sal disuelta.</li>
+                                    <li>Un posible error sistemático en los termómetros (¿marcan consistentemente más alto?).</li>
+                                    <li>Una ligera inexactitud en la medición de la presión atmosférica.</li>
+                                </ul>
+                                <p>¿Cuál te parece la causa más probable o la combinación de causas?</p>
+                            </li>
+                            <li><strong>Rendimiento del Condensador (U):</strong>
+                                <ul>
+                                    <li>Tu valor U = <strong>${labData.U_calculado.toFixed(1)} W/m²K</strong>.</li>
+                                    <li>Rango típico para vidrio: 200-600 W/m²K.</li>
+                                </ul>
+                                <p>Tu valor está en el extremo superior. Esto sugiere una buena transferencia de calor. ¿Crees que el alto caudal de refrigerante (${labData.caudal_L_min} L/min) es la razón principal? ¿Había otros factores (limpieza del vidrio, T° baja del refrigerante) que contribuyeron?</p>
+                            </li>
+                            <li><strong>Eficiencia Energética:</strong> Calculaste que se necesitaron ~${((( (labData.vol_condensado_mL / 1000) * 4186 * 70 ) + ( (labData.vol_condensado_mL / 1000) * 2288000 )) / 1000).toFixed(2)} kJ para evaporar el agua. ¿Cuánta energía crees que suministró la plancha en total? (Considera su potencia nominal y el tiempo). ¿Qué implica esto sobre la eficiencia del montaje no aislado?</li>
+                        </ol>
+                    `;
+                    break;
+
+                case 'conclusiones':
+                     feedback = `
+                        <strong>Sugerencia del Asistente:</strong> ¡Excelente! Asegúrate de que tus conclusiones respondan directamente a los objetivos específicos actualizados.
+                        <ul class="list-disc list-inside mt-2">
+                            <li>Reporta la T° de ebullición medida y la diferencia con la teórica del agua pura, junto con tu hipótesis sobre la causa.</li>
+                            <li>Reporta la energía de evaporación calculada.</li>
+                            <li>Reporta tu valor final de U = <strong>${labData.U_calculado.toFixed(1)} W/m²K</strong> y discute su coherencia.</li>
+                            <li>Reporta las pérdidas de masa del balance global.</li>
+                            <li>Enfatiza la importancia de la presión atmosférica en los procesos de cambio de fase y la relevancia de analizar el rendimiento de los intercambiadores de calor (como el condensador).</li>
+                        </ul>
+                    `;
+                    break;
+            }
+
+            feedbackEl.innerHTML = feedback;
+            feedbackEl.style.display = 'block';
+        }
+
+        // Mostrar la primera sección (introducción) al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            showSection('introduccion');
+        });
+    </script>
+</body>
+</html>
+
