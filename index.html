@@ -6,8 +6,26 @@
     <title>Informe Interactivo de Laboratorio: Calor II (Mecánica)</title>
     <!-- Carga de Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Carga de íconos (para el asistente de IA) -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+    <!-- Carga de íconos -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <!-- Llamar a createIcons inmediatamente después de cargar lucide -->
+    <script>
+      // Asegurarse de que lucide exista antes de llamarlo
+      if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+      } else {
+          console.error("Lucide library no se cargó correctamente.");
+          // Como fallback simple, podemos intentar en window.onload
+          window.onload = () => {
+              if (typeof lucide !== 'undefined') {
+                  lucide.createIcons();
+                  console.log("Lucide icons created on window.onload as fallback.");
+              } else {
+                 console.error("Lucide library failed to load even on window.onload.");
+              }
+          };
+      }
+    </script>
     <script>
       tailwind.config = {
         theme: {
@@ -28,23 +46,18 @@
         .lab-section.active { display: block; }
         .ai-button { transition: all 0.3s ease; }
         .ai-button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        /* Estilo para el contenedor del video */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* Proporción 16:9 */
-            height: 0;
+        /* Estilos para la imagen del montaje */
+        .setup-image-container {
+            max-width: 600px; /* Ajusta el tamaño máximo si es necesario */
+            margin: 1.5rem auto; /* Centrar y añadir espacio */
+            border-radius: 0.5rem;
             overflow: hidden;
-            max-width: 100%;
-            background: #000;
-            border-radius: 0.5rem; /* Esquinas redondeadas */
-            margin-bottom: 1.5rem; /* Espacio debajo del video */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .setup-image-container img {
+            display: block;
             width: 100%;
-            height: 100%;
+            height: auto;
         }
     </style>
 </head>
@@ -63,9 +76,11 @@
             <li><a href="#" class="nav-link font-medium text-gray-600 hover:text-blue-600" onclick="showSection('analisis-critico')">7. Análisis Crítico</a></li>
             <li><a href="#" class="nav-link font-medium text-gray-600 hover:text-blue-600" onclick="showSection('conclusiones')">8. Conclusiones</a></li>
         </ul>
+        <!-- Campo para múltiples estudiantes -->
         <div class="mt-8 p-3 bg-gray-100 rounded-lg text-sm text-gray-700">
-            <p><strong class="text-gray-900">Estudiante:</strong> [Tu Nombre]</p>
-            <p><strong class="text-gray-900">Curso:</strong> Transferencia de Calor II</p>
+            <label for="student-names" class="font-bold text-gray-900">Estudiantes:</label>
+            <textarea id="student-names" class="w-full h-24 p-2 mt-1 border border-gray-300 rounded-lg text-sm" placeholder="Escribe los nombres de los integrantes del grupo aquí..."></textarea>
+            <p class="mt-2"><strong class="text-gray-900">Curso:</strong> Transferencia de Calor II</p>
             <p><strong class="text-gray-900">Profesor:</strong> Ph.D. Juan Sandoval Herrera</p>
         </div>
     </nav>
@@ -81,16 +96,15 @@
         <section id="introduccion" class="lab-section active">
             <h2 class="text-3xl font-semibold text-gray-800 mb-4">1. Introducción</h2>
 
-            <!-- Video Insertado -->
-            <div class="video-container shadow-lg">
-                 <video controls>
-                    <source src="Video_Evaporación_y_Condensación_en_Laboratorio.mp4" type="video/mp4">
-                    Tu navegador no soporta el elemento de video.
-                </video>
+            <!-- AÑADIDO: Imagen real del montaje desde GitHub -->
+            <div class="setup-image-container">
+                 <!-- URL actualizada con el enlace proporcionado -->
+                 <img src="https://github.com/Juansanher25/labevapcon/blob/main/Montaje%20experimental.jpg?raw=true" alt="Montaje experimental real del laboratorio">
+                 <p class="text-center text-sm text-gray-600 mt-1">Montaje experimental utilizado en la práctica.</p>
             </div>
 
             <p class="text-gray-700 mb-4">
-                Observa el video anterior que resume el montaje y procedimiento. Luego, redacta la introducción de tu informe. Explica la importancia industrial de los procesos de evaporación y condensación en sistemas térmicos y de potencia. Describe brevemente el objetivo del experimento: analizar el calentamiento de una solución acuosa en Bogotá para estudiar la transferencia de calor y el comportamiento termodinámico durante el cambio de fase.
+                Observa la imagen anterior que muestra el montaje experimental. Luego, redacta la introducción de tu informe. Explica la importancia industrial de los procesos de evaporación y condensación en sistemas térmicos y de potencia. Describe brevemente el objetivo del experimento: analizar el calentamiento de una solución acuosa en Bogotá para estudiar la transferencia de calor y el comportamiento termodinámico durante el cambio de fase.
             </p>
             <textarea class="w-full h-64 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Escribe tu introducción aquí..."></textarea>
             <button class="ai-button mt-4" onclick="getAIAssistance('introduccion')">
@@ -152,7 +166,7 @@
                 Inserta tu gráfica de T1 (líquido) y T2 (vapor) contra el tiempo. Debajo, describe y analiza el comportamiento observado.
             </p>
             <div class="w-full h-64 p-4 border border-dashed border-gray-400 rounded-lg bg-gray-50 text-center flex items-center justify-center text-gray-500 mb-4">
-                (Inserta tu gráfica de Excel/Software aquí o súbela por separado y descríbela abajo)
+                (Sube tu gráfica a un servicio como Imgur y pega el enlace, o descríbela en detalle abajo)
             </div>
             <textarea class="w-full h-48 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Describe tu gráfica aquí...&#10;- ¿Qué ocurre en la primera etapa (calor sensible)?&#10;- ¿En qué momento T1 y T2 se igualan? ¿Qué significa esto?&#10;- ¿Qué temperatura de ebullición registraste?"></textarea>
             <button class="ai-button mt-4" onclick="getAIAssistance('analisis-grafico')">
@@ -205,7 +219,7 @@
             <p class="text-gray-700 mb-4">
                 Analiza críticamente tus resultados experimentales en comparación con los valores teóricos esperados.
             </p>
-            <textarea class="w-full h-96 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Sigue esta línea de análisis:&#10;1. Temperatura de Ebullición:&#10;   - Compara tu T_ebullición medida (${labData.temp_eb_experimental}°C) con la T_ebullición teórica del agua pura a ${labData.presion_mbar} mbar (≈ ${labData.temp_eb_pura_teorica}°C).&#10;   - ¿Son iguales? ¿Son diferentes? ¿Cuánto difieren?&#10;   - Discute las posibles causas de esta diferencia (presencia de soluto -mencionar brevemente sin entrar en detalles de coligativas-, error sistemático de los termómetros, error en la medición de presión). ¿Cuál consideras más probable y por qué?&#10;&#10;2. Coeficiente Global de Transferencia de Calor (U):&#10;   - Compara tu valor experimental U = ${labData.U_calculado.toFixed(1)} W/m²K con los rangos típicos para condensadores de vidrio (200-600 W/m²K).&#10;   - ¿Es tu valor coherente? ¿Está en el extremo alto o bajo del rango?&#10;   - ¿Qué factores de tu experimento (ej. alto caudal de refrigerante) podrían explicar tu resultado específico?&#10;&#10;3. Sugerencias de Mejora:&#10;   - Si quisieras mejorar la eficiencia del proceso (evaporar más rápido o condensar más eficientemente), ¿qué cambios harías al montaje o a las condiciones de operación? (Considera aislamiento, potencia de calentamiento, flujo de refrigerante, etc.)."></textarea>
+            <textarea class="w-full h-96 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Sigue esta línea de análisis:&#10;1. Temperatura de Ebullición:&#10;   - Compara tu T_ebullición medida (${labData.temp_eb_experimental}°C) con la T_ebullición teórica del agua pura a ${labData.presion_mbar} mbar (≈ ${labData.temp_eb_pura_teorica}°C).&#10;   - ¿Son iguales? ¿Son diferentes? ¿Cuánto difieren?&#10;   - Discute las posibles causas de esta diferencia (presencia de soluto -mencionar brevemente sin entrar en detalles de coligativas-, error sistemático de los termómetros, error en la medición de presión). ¿Cuál consideras más probable y por qué?&#10;&#10;2. Coeficiente Global de Transferencia de Calor (U):&#10;   - Compara tu valor experimental U (calculado en la sección anterior) con los rangos típicos para condensadores de vidrio (200-600 W/m²K).&#10;   - ¿Es tu valor coherente? ¿Está en el extremo alto o bajo del rango?&#10;   - ¿Qué factores de tu experimento (ej. alto caudal de refrigerante) podrían explicar tu resultado específico?&#10;&#10;3. Sugerencias de Mejora:&#10;   - Si quisieras mejorar la eficiencia del proceso (evaporar más rápido o condensar más eficientemente), ¿qué cambios harías al montaje o a las condiciones de operación? (Considera aislamiento, potencia de calentamiento, flujo de refrigerante, etc.)."></textarea>
             <button class="ai-button mt-4" onclick="getAIAssistance('analisis-critico')">
                 <span class="flex items-center bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700">
                     <svg data-lucide="brain-circuit" class="mr-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5V3m0 18v-2M5 12H3m18 0h-2M12 12a4 4 0 1 0-4-4m0 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"/><path d="M16 12a4 4 0 1 0-4-4m8 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M8 12a4 4 0 1 0 4 4m-8 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M12 16a4 4 0 1 0-4-4"/></svg>
@@ -270,6 +284,14 @@
                     link.classList.remove('text-gray-600');
                 }
             });
+             // CORRECCIÓN: Llamar a lucide.createIcons() DESPUÉS de mostrar la sección
+             // para asegurar que los elementos SVG estén visibles en el DOM.
+             // Se añade un pequeño retraso para dar tiempo al navegador a renderizar.
+             setTimeout(() => {
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+             }, 50); // 50 milisegundos de retraso
         }
 
         // Simulación de Asistente de IA (ACTUALIZADO)
@@ -354,16 +376,32 @@
                     break;
 
                 case 'analisis-critico':
+                    // Obtener los valores ingresados por el estudiante para U y Teb experimental
+                    const userTextCritico = document.querySelector('#analisis-critico textarea').value;
+                    const TebExperimentalUsuarioMatch = userTextCritico.match(/T_ebullición medida\s*[:=]\s*(\d+(\.\d+)?)/i);
+                    const UExperimentalUsuarioMatch = userTextCritico.match(/U\s*[:=]\s*(\d+(\.\d+)?)/i);
+
+                    let TebExperimentalUsuario = labData.temp_eb_experimental; // Valor por defecto
+                    if (TebExperimentalUsuarioMatch && TebExperimentalUsuarioMatch[1]) {
+                        TebExperimentalUsuario = parseFloat(TebExperimentalUsuarioMatch[1]);
+                    }
+
+                    let UExperimentalUsuario = labData.U_calculado; // Valor por defecto
+                    if (UExperimentalUsuarioMatch && UExperimentalUsuarioMatch[1]) {
+                        UExperimentalUsuario = parseFloat(UExperimentalUsuarioMatch[1]);
+                    }
+
+
                     feedback = `
                         <strong class="text-blue-700">Asistente de IA (Análisis Crítico):</strong> Ahora el foco está en comparar tu experimento con la referencia del agua pura y analizar el rendimiento del condensador.
                         <ol class="list-decimal list-inside space-y-2 mt-2">
                             <li><strong>Temperatura de Ebullición:</strong>
                                 <ul>
                                     <li>T° Ebullición Teórica (Agua Pura a ${labData.presion_mbar} mbar) ≈ <strong>${labData.temp_eb_pura_teorica}°C</strong>.</li>
-                                    <li>T° Ebullición Experimental (Solución) = <strong>${labData.temp_eb_experimental}°C</strong>.</li>
-                                    <li>Diferencia = <strong>${ (labData.temp_eb_experimental - labData.temp_eb_pura_teorica).toFixed(1) }°C</strong>.</li>
+                                    <li>Tu T° Ebullición Experimental (Solución) = <strong>${TebExperimentalUsuario}°C</strong>.</li>
+                                    <li>Diferencia = <strong>${ (TebExperimentalUsuario - labData.temp_eb_pura_teorica).toFixed(1) }°C</strong>.</li>
                                 </ul>
-                                <p>¿A qué atribuyes esta diferencia de ${ (labData.temp_eb_experimental - labData.temp_eb_pura_teorica).toFixed(1) }°C? Considera:</p>
+                                <p>¿A qué atribuyes esta diferencia de ${ (TebExperimentalUsuario - labData.temp_eb_pura_teorica).toFixed(1) }°C? Considera:</p>
                                 <ul class="list-disc list-inside ml-4">
                                     <li>El efecto (aunque ahora no lo cuantifiques en detalle) de tener sal disuelta.</li>
                                     <li>Un posible error sistemático en los termómetros (¿marcan consistentemente más alto?).</li>
@@ -373,10 +411,11 @@
                             </li>
                             <li><strong>Rendimiento del Condensador (U):</strong>
                                 <ul>
-                                    <li>Tu valor U = <strong>${labData.U_calculado.toFixed(1)} W/m²K</strong>.</li>
+                                    <li>Tu valor U = <strong>${UExperimentalUsuario.toFixed(1)} W/m²K</strong>.</li>
                                     <li>Rango típico para vidrio: 200-600 W/m²K.</li>
                                 </ul>
-                                <p>Tu valor está en el extremo superior. Esto sugiere una buena transferencia de calor. ¿Crees que el alto caudal de refrigerante (${labData.caudal_L_min} L/min) es la razón principal? ¿Había otros factores (limpieza del vidrio, T° baja del refrigerante) que contribuyeron?</p>
+                                <p>${ UExperimentalUsuario >= 200 && UExperimentalUsuario <= 600 ? 'Tu valor está dentro del rango esperado. ¡Bien!' : 'Tu valor está fuera del rango típico (200-600 W/m²K).' } ${ UExperimentalUsuario > 500 ? 'Está en el extremo superior, sugiriendo buena transferencia de calor.' : (UExperimentalUsuario < 300 ? 'Está en el extremo inferior, ¿posibles incrustaciones o bajo flujo real?' : '') }</p>
+                                <p>¿Crees que el alto caudal de refrigerante (${labData.caudal_L_min} L/min) es la razón principal para un valor alto? ¿Había otros factores (limpieza del vidrio, T° baja del refrigerante) que contribuyeron?</p>
                             </li>
                             <li><strong>Eficiencia Energética:</strong> Calculaste que se necesitaron ~${((( (labData.vol_condensado_mL / 1000) * 4186 * 70 ) + ( (labData.vol_condensado_mL / 1000) * 2288000 )) / 1000).toFixed(2)} kJ para evaporar el agua. ¿Cuánta energía crees que suministró la plancha en total? (Considera su potencia nominal y el tiempo). ¿Qué implica esto sobre la eficiencia del montaje no aislado?</li>
                         </ol>
@@ -389,7 +428,7 @@
                         <ul class="list-disc list-inside mt-2">
                             <li>Reporta la T° de ebullición medida y la diferencia con la teórica del agua pura, junto con tu hipótesis sobre la causa.</li>
                             <li>Reporta la energía de evaporación calculada.</li>
-                            <li>Reporta tu valor final de U = <strong>${labData.U_calculado.toFixed(1)} W/m²K</strong> y discute su coherencia.</li>
+                            <li>Reporta tu valor final de U calculado y discute su coherencia.</li>
                             <li>Reporta las pérdidas de masa del balance global.</li>
                             <li>Enfatiza la importancia de la presión atmosférica en los procesos de cambio de fase y la relevancia de analizar el rendimiento de los intercambiadores de calor (como el condensador).</li>
                         </ul>
@@ -399,15 +438,48 @@
 
             feedbackEl.innerHTML = feedback;
             feedbackEl.style.display = 'block';
+             // CORRECCIÓN: Llamar a lucide.createIcons() DESPUÉS de mostrar el feedback
+             // para asegurar que los elementos SVG dentro del feedback también se rendericen.
+             setTimeout(() => {
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+             }, 50);
         }
 
         // Mostrar la primera sección (introducción) al cargar la página
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
+        // Y asegurar que los íconos se creen correctamente
+        function initializeApp() {
+            if (typeof lucide !== 'undefined') {
+                try {
+                    lucide.createIcons();
+                    console.log("Lucide icons created on initializeApp.");
+                } catch (e) {
+                    console.error("Error creating Lucide icons on init:", e);
+                }
+            } else {
+                 console.error("Lucide not defined during initialization.");
+                 // Intentar de nuevo en window.onload como último recurso
+                 window.onload = () => {
+                     if (typeof lucide !== 'undefined') {
+                         try {
+                            lucide.createIcons();
+                            console.log("Lucide icons created on window.onload fallback.");
+                         } catch (e) {
+                             console.error("Error creating Lucide icons on window.onload fallback:", e);
+                         }
+                     } else {
+                         console.error("Lucide failed to load.");
+                     }
+                 };
+            }
             showSection('introduccion');
-        });
+        }
+
+        // Llamar a la inicialización cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', initializeApp);
+
     </script>
 </body>
 </html>
-
 
